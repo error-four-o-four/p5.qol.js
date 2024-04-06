@@ -1,0 +1,33 @@
+{
+	"name": "@http404/p5.qol.js",
+	"version": "0.0.1",
+	"description": "A p5 library to make my life easier.",
+	"keywords": [
+		"p5",
+		"p5.js",
+		"utility"
+	],
+	"author": "Ich",
+	"license": "MIT",
+	"type": "module",
+	"files": [
+		"lib",
+		"README.md"
+	],
+	"main": "lib/p5.qol.min.js",
+	"module": "lib/p5.qol.js",
+	"types": "lib/index.d.ts",
+	"scripts": {
+		"dev": "cd examples/vite && vite",
+		"build": "vite build"
+	},
+	"devDependencies": {
+		"@types/node": "^20.12.2",
+		"@types/p5": "^1.7.6",
+		"tslib": "^2.6.2",
+		"tsup": "^8.0.2",
+		"typescript": "^5.4.3",
+		"vite": "^5.2.7"
+	}
+}
+
