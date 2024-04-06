@@ -46,7 +46,7 @@ Here's what you get, right out of the box:
 
 But there's more to it than that! 😮
 
-Because
+Because ...
 * you're a *self-determined* being, aren't you?
 * You want to have *full* control, don't you?
 * *You* want to decide how you're canvas should behave and look like, right!
@@ -89,7 +89,7 @@ function windowResizeFinished(e) {
 ### And there's even more!
 
 If you download this type-aware library right now, you'll get these properties and methods on top!\
-🌟*For free!*
+🌟 *For free!*
 * `widthHalf` and `heightHalf`
 * `resizeRatioX`, `resizeRatioY` and `resizeRatio`
 * `windowResizeRatioX` and `windowResizeRatioY`
