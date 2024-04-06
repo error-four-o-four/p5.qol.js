@@ -1,0 +1,22 @@
+{
+	"name": "vite-ts-example",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vite"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"typescript": "^5.4.3",
+		"vite": "^5.2.7"
+	},
+	"dependencies": {
+		"@http404/p5.qol.js": "file:../../",
+		"p5": "^1.9.2"
+	}
+}
+
