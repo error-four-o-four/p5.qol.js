@@ -100,7 +100,7 @@ If you download this type-aware library right now, you'll get these properties a
 
 ## Usage
 
-Here's the [Source Code](https://github.com/error-four-o-four/p5.qol.js/tree/main/examples) of some Examples these various and a [Live Example](https://openprocessing.org/sketch/2232016).
+Here's the [Source Code](https://github.com/error-four-o-four/p5.qol.js/tree/main/examples) of some Examples and a [Live Example](https://openprocessing.org/sketch/2232016).
 
 ## Docs
 
