@@ -46,9 +46,10 @@ Here's what you get, right out of the box:
 
 But there's more to it than that! 😮
 
-Because you're a *self-determined* being, aren't you?\
-You want to have *full* control, don't you?\
-*You* want to decide how you're canvas should behave and look like, right!
+Because
+* you're a *self-determined* being, aren't you?
+* You want to have *full* control, don't you?
+* *You* want to decide how you're canvas should behave and look like, right!
 
 ### Guess what! You can decide, right from the beginning or even on the fly!
 
@@ -99,7 +100,7 @@ If you download this type-aware library right now, you'll get these properties a
 
 ## Usage
 
-See these various [Examples]().
+See these various [Examples](https://github.com/error-four-o-four/p5.qol.js/tree/main/examples).
 
 ## Docs
 

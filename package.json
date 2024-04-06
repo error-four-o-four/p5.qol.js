@@ -7,6 +7,11 @@
 		"p5.js",
 		"utility"
 	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/error-four-o-four/p5.qol.js.git"
+	},
+	"homepage": "https://github.com/error-four-o-four/p5.qol.js",
 	"author": "Ich",
 	"license": "MIT",
 	"type": "module",
