@@ -20,6 +20,8 @@ const initialize = (p5: P5) => {
 	overwriteResizeCanvas(p5);
 	overwriteCreateCanvas(p5);
 	overwriteWindowResized(p5);
+
+	console.log('%cp5.QoL.js', 'color: white; background: #ff1493;');
 };
 
 // @ts-ignore
