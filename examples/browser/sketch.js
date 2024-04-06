@@ -1,13 +1,19 @@
+let radius;
+let distance;
+
 function setup() {
 	colorMode(HSL, 360, 1, 1, 1);
 
 	createCanvas({
 		type: 'window',
-		// margin: 0.05,
+		margin: 0.1,
 		centerOrigin: true,
 		resizeCanvas: true,
 		toggleLoop: true,
 	});
+
+	radius = 0.125 * Math.min(width, height);
+	distance = 0.625 * Math.min(widthHalf, heightHalf);
 }
 
 function draw() {
@@ -19,18 +25,24 @@ function draw() {
 	fill(hue, 1, 0.5);
 
 	const a = (t / 180) * TAU;
-	const d = 50;
-	const x = Math.cos(a) * d;
-	const y = Math.sin(a) * d;
-	ellipse(x, y, 50);
+	const x = Math.cos(a) * distance;
+	const y = Math.sin(a) * distance;
+	ellipse(x, y, radius);
 }
 
 function windowResizeTriggered(e) {
 	console.log('triggered');
-	console.log(e);
 }
 
 function windowResizeFinished(e) {
-	console.log('finished');
-	console.log(e);
+	const ratio =
+		resizeRatio < 1
+			? Math.min(resizeRatioX, resizeRatioY)
+			: Math.max(resizeRatioX, resizeRatioY);
+
+	console.log(resizeRatio, ratio);
+
+	// recalculate variables
+	radius *= ratio;
+	distance *= ratio;
 }
