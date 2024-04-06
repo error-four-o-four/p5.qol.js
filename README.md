@@ -93,7 +93,7 @@ If you download this type-aware library right now, you'll get these properties a
 * `widthHalf` and `heightHalf`
 * `resizeRatioX`, `resizeRatioY` and `resizeRatio`
 * `windowResizeRatioX` and `windowResizeRatioY`
-* `centerOrign()`
+* `centerOrigin()`
 * `toggleLoop()` aaand
 * `toggleFullscreen()`
 
