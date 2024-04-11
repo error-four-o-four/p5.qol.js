@@ -1,52 +1,114 @@
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'path';
 
-import { defineConfig } from 'vite';
-import { build } from 'tsup';
+import { defineConfig, type LibraryOptions, type UserConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
 
-const file = fileURLToPath(import.meta.url);
-const dir = dirname(file);
+import { __dirname, onError, onCloseBundle } from './vite.utils.ts';
 
-const onError = () => ({
-	name: 'handleError',
-	buildEnd: (error?: Error) => {
-		if (error) {
-			console.error(error);
-			throw new Error('❌ Failed');
-		}
-	},
-});
+const name = 'p5QoL';
+const entry = join(__dirname, 'src/index.ts');
+const outDir = join(__dirname, 'lib');
+const publicDir = join(__dirname, 'dev/public');
+// const cacheDir = join(__dirname, 'node_modules/.vite/core'),
 
-const tsup = () => ({
-	name: 'buildDeclarations',
-	closeBundle: async () => {
-		await build({
-			entry: ['src/index.ts'],
-			clean: false,
-			format: ['esm'],
-			outDir: 'lib',
-			dts: { only: true },
-		});
-	},
-});
+// ### Build Library ###
 
-export default defineConfig({
-	// cacheDir: resolve(dir, '../../node_modules/.vite/core'),
-	build: {
-		// sourcemap: true,
-		emptyOutDir: true,
-		target: 'esnext',
-		outDir: 'lib',
-		lib: {
-			entry: resolve(dir, 'src/index.ts'),
-			formats: ['es', 'iife'],
-			name: 'p5QoL',
-			fileName: (format) => (format === 'iife' ? 'p5.qol.min.js' : 'p5.qol.js'),
+const getBuildConfig = (): UserConfig => {
+	const formats: LibraryOptions['formats'] = ['es', 'iife'];
+	const fileName: LibraryOptions['fileName'] = (format) =>
+		format === 'iife' ? 'p5.qol.min.js' : 'p5.qol.js';
+
+	return {
+		build: {
+			target: 'esnext',
+			outDir,
+			lib: {
+				entry,
+				formats,
+				name,
+				fileName,
+			},
+			minify: 'esbuild',
+			emptyOutDir: true,
+			// sourcemap: true,
 		},
-		minify: 'esbuild',
-	},
-	optimizeDeps: {
-		include: [],
-	},
-	plugins: [onError(), tsup()],
-});
+		optimizeDeps: {
+			include: [],
+		},
+		// copy files to public dev folder
+		plugins: [onError(), onCloseBundle(entry, outDir, publicDir)],
+	};
+};
+
+// ### Launch ViteDevServer ###
+
+const getMPAConfig = (): UserConfig => {
+	// run vite dev server
+	// with multiple entry points
+
+	const entries = ['global', 'instance', 'template'];
+	const input = {
+		main: join(__dirname, 'dev/index.html'),
+		...entries
+			.map((page) => [page, join(__dirname, `dev/${page}/index.html`)])
+			.reduce((all, [key, val]) => Object.assign(all, { [key]: val }), {}),
+	};
+
+	const root = join(__dirname, 'dev');
+
+	return {
+		root,
+		publicDir,
+		plugins: [onError()],
+		build: {
+			rollupOptions: {
+				input,
+			},
+		},
+	};
+};
+
+const getTestConfig = (): UserConfig => {
+	// setup vitest-canvas-mock
+	// https://github.com/wobsoriano/vitest-canvas-mock?tab=readme-ov-file#usage
+	const root = join(__dirname, 'test');
+
+	return {
+		test: {
+			root,
+			include: ['./unit/**/*.{test,spec}.ts'],
+			exclude: [...configDefaults.exclude],
+			setupFiles: './vitest.canvas.ts',
+			globalSetup: './vitest.setup.ts',
+			environment: 'jsdom',
+			deps: {
+				optimizer: {
+					web: {
+						include: ['vitest-canvas-mock', 'p5'],
+					},
+				},
+			},
+			poolOptions: {
+				threads: {
+					singleThread: true,
+				},
+			},
+			// environmentOptions: {
+			// 	jsdom: {
+			// 		resources: 'usable',
+			// 	},
+			// },
+		},
+	};
+};
+
+const getDevConfig = (): UserConfig => {
+	return {
+		...getMPAConfig(),
+		...getTestConfig(),
+	};
+};
+
+export default defineConfig((config) =>
+	config.mode !== 'production' ? getDevConfig() : getBuildConfig()
+);
