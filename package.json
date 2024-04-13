@@ -24,8 +24,9 @@
 	"types": "lib/index.d.ts",
 	"scripts": {
 		"dev": "vite",
-		"test:unit": "vitest",
-		"build": "vite build"
+		"test:env": "vitest --config vitest.config.env.ts",
+		"test:unit": "vitest --config vitest.config.unit.ts",
+		"build": "vite build --config vite.build.ts"
 	},
 	"devDependencies": {
 		"@types/jsdom": "^21.1.6",

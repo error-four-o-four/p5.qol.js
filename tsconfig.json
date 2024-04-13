@@ -18,8 +18,9 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["vite/client", "vitest"]
+		"types": ["vite/client"]
 	},
-	"exclude": ["node_modules", "*/node_modules", "examples", "lib"],
-	"include": ["dev", "src", "test"]
+	"exclude": ["node_modules", "*/node_modules", "examples", "lib", "test"],
+	"include": ["dev", "src"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

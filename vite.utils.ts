@@ -1,9 +1,8 @@
 import { fileURLToPath } from 'node:url';
-import { dirname, join, sep } from 'node:path';
-import { statSync, readdirSync, copyFileSync } from 'node:fs';
+import { dirname } from 'node:path';
 
 import { PluginOption } from 'vite';
-import { build } from 'tsup';
+import { UserConfig } from 'vitest';
 
 export const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,33 +16,27 @@ export const onError = (): PluginOption => ({
 	},
 });
 
-export const onCloseBundle = (
-	entry: string,
-	outDir: string,
-	publicDir: string
-): PluginOption => ({
-	name: 'close-bundle',
-	closeBundle: async () => {
-		const input = entry.replace(__dirname, '').split(sep).slice(1).join('/');
+// Vitest
 
-		console.log('\nBuild Declarations');
-		await build({
-			entry: [input],
-			clean: false,
-			format: ['esm'],
-			outDir,
-			dts: { only: true },
-		});
+// https://vitest.dev/config/#onconsolelog
+export const onConsoleLog = (
+	log: string,
+	type: 'stdout' | 'stderr'
+): false | void => {
+	if (log.startsWith('p5.') && type === 'stdout') return false;
+};
 
-		console.log('\nCopy files to public dir');
-		readdirSync(outDir).forEach((item) => {
-			const src = join(outDir, item);
-
-			if (statSync(src).isFile()) {
-				copyFileSync(src, join(publicDir, item));
-			}
-		});
-
-		console.log('✅ Done');
+export const commonConfig: UserConfig = {
+	deps: {
+		optimizer: {
+			web: {
+				include: ['vitest-canvas-mock', 'p5'],
+			},
+		},
 	},
-});
+	poolOptions: {
+		threads: {
+			singleThread: true,
+		},
+	},
+};
