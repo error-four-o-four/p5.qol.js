@@ -1,4 +1,4 @@
-import { beforeAll, vi } from 'vitest';
+import { beforeAll, expect, vi } from 'vitest';
 
 import p5 from 'p5';
 import initialize, { type P5QoL } from '../src/index.ts';
@@ -24,7 +24,7 @@ vi.stubGlobal('p5', p5);
 vi.stubGlobal('pInst', pInst);
 
 beforeAll(() => {
-	pInst.createCanvas(200);
+	expect(pInst).not.toBeNull();
 });
 
 declare module 'p5' {
