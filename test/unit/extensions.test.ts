@@ -1,4 +1,4 @@
-import { describe, it, expect, assert } from 'vitest';
+import { describe, it, expect, assert, beforeAll } from 'vitest';
 
 import type { P5QoL, P5QoLProps } from '../../src/types.ts';
 
@@ -7,8 +7,6 @@ import { centerOriginPrivateDefaults } from '../../src/addons/centerOrigin.ts';
 import { createCanvasPrivateDefaults } from '../../src/overwrites/createCanvas.ts';
 import { windowResizedPrivateDefaults } from '../../src/overwrites/windowResized.ts';
 
-const dimension = 200;
-
 const privateDefaults: P5QoLProps = {
 	...centerOriginPrivateDefaults,
 	...createCanvasPrivateDefaults,
@@ -16,6 +14,12 @@ const privateDefaults: P5QoLProps = {
 } as const;
 
 const privateKeys = Object.keys(privateDefaults) as (keyof P5QoLProps)[];
+
+const dimension = 200;
+
+beforeAll(() => {
+	pInst.createCanvas(dimension);
+});
 
 describe('The package provides new p5 methods and properties', () => {
 	it('Should add a single private properties object', () => {
@@ -40,8 +44,6 @@ describe('The package provides new p5 methods and properties', () => {
 			'resizeRatio',
 			'resizeRatioX',
 			'resizeRatioY',
-			'windowResizeRatioX',
-			'windowResizeRatioY',
 		];
 
 		props.forEach((key) => {
